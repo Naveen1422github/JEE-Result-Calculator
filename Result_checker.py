@@ -79,19 +79,26 @@ st.markdown('<h2 class="title">JEE Result Summary</h2>', unsafe_allow_html=True)
 
 # Get URL input from the user
 
+# URL input
 url = st.text_input("##### Put Link of your AnswerSheet here:", "https://github.com/Naveen1422github/JEE-Result-Calculator")
 
+# Columns for day and shift
 day_column, shift_column = st.columns(2)
 
 # Radio buttons for selecting day
 selected_day = day_column.radio("Select Day", ["27 Jan", "31 Jan", "01 Feb"])
 selected_day = selected_day[:2]
+
 # Radio buttons for selecting shift
 selected_shift = shift_column.radio("Select Shift", ["Shift 1", "Shift 2"])
-selected_shift= selected_shift[-1:]
-# update path with day and shift
-path = f"Answer{selected_day}{selected_shift}.csv"    
-st.write(path)
+selected_shift = selected_shift[-1:]
+
+# Update path with day and shift
+path = f"Answer{selected_day}{selected_shift}.csv"
+
+# Display URL and path
+st.write("Path:", path)
+
 Start = st.button("Calculate")
 # AnswerSheet Manipulation(given by NTA)
 
@@ -112,6 +119,8 @@ question_ids = []
 your_answers = []
 
 if Start:
+
+    container.empty()
     # Filling List with Subject Entries
     calculate(sections[0], sections[1]) # maths
     calculate(sections[2], sections[3]) # phy
@@ -209,3 +218,9 @@ if Start:
 
     st.table(table_data)
 
+    df = pd.read_csv("data.csv")
+
+    new_data = {'URL': url, 'Total Marks': Total_Marks, 'Total Attempted': Total_Attempted, 'Day':selected_day, 'Shift':selected_shift}
+    df = df._append(new_data, ignore_index=True)
+
+    df.to_csv("data.csv")
