@@ -81,7 +81,7 @@ st.markdown('<h2 class="title">JEE Result Summary</h2>', unsafe_allow_html=True)
 
 # URL input
 url = st.text_input("##### Put Link of your AnswerSheet here:", "https://github.com/Naveen1422github/JEE-Result-Calculator")
-
+st.image('example.png')
 # Columns for day and shift
 day_column, shift_column = st.columns(2)
 
@@ -119,8 +119,6 @@ question_ids = []
 your_answers = []
 
 if Start:
-
-    container.empty()
     # Filling List with Subject Entries
     calculate(sections[0], sections[1]) # maths
     calculate(sections[2], sections[3]) # phy
