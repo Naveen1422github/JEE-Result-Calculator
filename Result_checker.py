@@ -57,7 +57,7 @@ def subject_val(sub):
 
 # Start
 url = "https://cdn3.digialm.com//per/g28/pub/2083/touchstone/AssessmentQPHTMLMode1//2083O23354/2083O23354S16D16841/17067995351433920/MP13002537_2083O23354S16D16841E1.html"
-path = "answer.xlsx"    
+path = "Answer1.csv"    
 
 #-----
 
@@ -83,7 +83,7 @@ url = st.text_input("Enter URL and Press Enter:", "https://www.google.com/")
 Start = st.button("Calculate")
 # AnswerSheet Manipulation(given by NTA)
 
-ans_sheet = pd.read_excel(path)
+ans_sheet = pd.read_csv(path)
 ans_sheet = ans_sheet.drop(0)
 ans_sheet = ans_sheet.rename(columns={'Unnamed: 0': 'Question ID', 'Unnamed: 1': 'Answers'})
 ans_sheet = ans_sheet.reset_index(drop=True)
