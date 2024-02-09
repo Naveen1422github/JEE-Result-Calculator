@@ -62,6 +62,8 @@ path = "Answer312.csv"
 
 #-----
 
+
+
 st.markdown(
     """
     <style>
@@ -75,15 +77,15 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.markdown('<h2 class="title">JEE Result Summary</h2>', unsafe_allow_html=True)
+st.write("# JEE Result Summary")
+st.markdown('<h3 class="title">Just Paste Your Answer Sheet Link 👇 & Select you shift </h3>', unsafe_allow_html=True)
 
 # Get URL input from the user
 
 # URL input
-url = st.text_input("##### Put Link of your AnswerSheet here:", "https://github.com/Naveen1422github/JEE-Result-Calculator")
+url = st.text_input("", "")
 url = url.strip()
 
-st.image('example.png')
 # Columns for day and shift
 day_column, shift_column = st.columns(2)
 
@@ -98,6 +100,7 @@ selected_shift = selected_shift[-1:]
 # Update path with day and shift
 path = f"Answer{selected_day}{selected_shift}.csv"
 
+
 Start = st.button("Calculate")
 # AnswerSheet Manipulation(given by NTA)
 
@@ -108,23 +111,21 @@ ans_sheet['Question ID'] = ans_sheet['Question ID'].astype(str)
 ans_sheet['Answers'] = ans_sheet['Answers'].astype(str)
 
 
-# Getting Page for Scrapping
-page = requests.get(url)
-soup = bs(page.text, 'html.parser')
-sections = soup.find_all('div', class_='section-cntnr')
-
-if not page:
-    st.warning("Unable to fetch Page check your link or internet")
-    time.delay(1)
-# List 
-question_ids = []
-your_answers = []
-
-# check for correct url
-if len(url) < 100:
-    st.warning("Please put correct Link")
-
 if Start:
+    # Getting Page for Scrapping
+    page = requests.get(url)
+    soup = bs(page.text, 'html.parser')
+    sections = soup.find_all('div', class_='section-cntnr')
+
+
+    if not page:
+        st.warning("Unable to fetch Page check your link or internet")
+        time.delay(1)
+    # List 
+    question_ids = []
+    your_answers = []
+
+
 
     # Filling List with Subject Entries
     calculate(sections[0], sections[1]) # maths
