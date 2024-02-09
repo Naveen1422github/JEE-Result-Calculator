@@ -81,12 +81,14 @@ st.markdown('<h2 class="title">JEE Result Summary</h2>', unsafe_allow_html=True)
 
 # URL input
 url = st.text_input("##### Put Link of your AnswerSheet here:", "https://github.com/Naveen1422github/JEE-Result-Calculator")
+url = url.strip()
+
 st.image('example.png')
 # Columns for day and shift
 day_column, shift_column = st.columns(2)
 
 # Radio buttons for selecting day
-selected_day = day_column.radio("Select Day", ["27 Jan", "31 Jan", "01 Feb"])
+selected_day = day_column.radio("Select Day", ["27 Jan", "29 Jan", "30 Jan", "31 Jan", "01 Feb"])
 selected_day = selected_day[:2]
 
 # Radio buttons for selecting shift
@@ -95,9 +97,6 @@ selected_shift = selected_shift[-1:]
 
 # Update path with day and shift
 path = f"Answer{selected_day}{selected_shift}.csv"
-
-# Display URL and path
-st.write("Path:", path)
 
 Start = st.button("Calculate")
 # AnswerSheet Manipulation(given by NTA)
@@ -114,11 +113,19 @@ page = requests.get(url)
 soup = bs(page.text, 'html.parser')
 sections = soup.find_all('div', class_='section-cntnr')
 
+if not page:
+    st.warning("Unable to fetch Page check your link or internet")
+    time.delay(1)
 # List 
 question_ids = []
 your_answers = []
 
+# check for correct url
+if len(url) < 100:
+    st.warning("Please put correct Link")
+
 if Start:
+
     # Filling List with Subject Entries
     calculate(sections[0], sections[1]) # maths
     calculate(sections[2], sections[3]) # phy
@@ -138,9 +145,14 @@ if Start:
     merged_df['Marks'] = merged_df.apply(lambda row: 4 if row['Answers'] == row['Your_Answer'] else (-1 if len(str(row['Your_Answer'])) == 10 else 0), axis=1)
     
     
-   # time.sleep(1)
+    #time.sleep(1)
     # Subject Divisions and calculated Fields 
-    Total_Attempted = (merged_df['Your_Answer'].apply(len) != 0).sum()
+    
+    if (merged_df['Your_Answer'].apply(lambda x: len(str(x)) if pd.notna(x) else 0) != 0).sum():
+        Total_Attempted = (merged_df['Your_Answer'].apply(len) != 0).sum()
+    else :
+        st.warning("Make sure you have selected correct Shift or used correct candidate link")
+
     Total_Marks = merged_df['Marks'].sum()
     sectioned_dfs = [merged_df.iloc[i:i+30] for i in range(0, len(merged_df), 30)]
     Maths = sectioned_dfs[0]
