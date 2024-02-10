@@ -98,7 +98,7 @@ selected_shift = shift_column.radio("Select Shift", ["Shift 1", "Shift 2"])
 selected_shift = selected_shift[-1:]
 
 # Update path with day and shift
-path = f"Answer{selected_day}{selected_shift}.csv"
+path = f"Answer_Sheets\Answer{selected_day}{selected_shift}.csv"
 
 
 Start = st.button("Calculate")
@@ -229,7 +229,7 @@ if Start:
 
     st.table(table_data)
 
-    df = pd.read_csv("data.csv")
+    df = pd.read_csv("other_files/data.csv")
 
     new_data = {'URL': url, 'Total Marks': Total_Marks, 'Total Attempted': Total_Attempted, 'Day':selected_day, 'Shift':selected_shift}
     df = df._append(new_data, ignore_index=True)
