@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+import os
 from bs4 import BeautifulSoup as bs
 import streamlit as st
 import time
@@ -98,8 +99,12 @@ selected_shift = shift_column.radio("Select Shift", ["Shift 1", "Shift 2"])
 selected_shift = selected_shift[-1:]
 
 # Update path with day and shift
-path = f"Answer_Sheets\Answer{selected_day}{selected_shift}.csv"
+# path = f"Answer_Sheets\Answer{selected_day}{selected_shift}.csv"
+csv_folder = "Answer_Sheets"
+if not os.path.exists(csv_folder):
+    os.makedirs(csv_folder)
 
+path = os.path.join(csv_folder, f"Answer{selected_day}{selected_shift}.csv")
 
 Start = st.button("Calculate")
 # AnswerSheet Manipulation(given by NTA)
