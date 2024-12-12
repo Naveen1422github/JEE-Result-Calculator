@@ -14,4 +14,4 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Run TruffleHog Scan
-      uses: trufflesecurity/trufflehog-actions-scan@v2
+      uses: edplato/trufflehog-actions-scan@master
