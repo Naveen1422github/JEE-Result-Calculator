@@ -13,14 +13,14 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
-       with:
-          fetch-depth: 0 # Fetch all history for a full scan
+      with:
+        fetch-depth: 0 # Fetch all history for a full scan
 
       # Step 2: Install TruffleHog
-      - name: Install TruffleHog
-        run: pip install --upgrade trufflehog
+    - name: Install TruffleHog
+      run: pip install --upgrade trufflehog
 
       # Step 3: Run TruffleHog to Scan Entire Repo
-      - name: Run TruffleHog Scan
-        run: |
-          trufflehog git . --json
+    - name: Run TruffleHog Scan        
+      run: |
+        trufflehog git . --json
