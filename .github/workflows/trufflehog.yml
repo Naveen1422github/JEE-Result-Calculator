@@ -18,5 +18,4 @@ jobs:
           fetch-depth: 0
 
       - name: Run TruffleHog Scan
-        uses: trufflesecurity/trufflehog@add-actions-cli-switch 
-
+        uses: edplato/trufflehog-actions-scan@master
